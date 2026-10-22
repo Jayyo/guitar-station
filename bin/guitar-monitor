@@ -54,7 +54,8 @@ def main(argv):
 
         def on_samples(left):
             r = tracker.feed(left)
-            line = (f"{r.target:<3} {r.freq:7.2f} Hz  {r.cents:+5.1f}¢  {r.advice}"
+            advice = {"ok": "맞음", "far": "다른 음", "up": "조여", "down": "풀어"}[r.direction]
+            line = (f"{r.target:<3} {r.freq:7.2f} Hz  {r.cents:+5.1f}¢  {advice}"
                     f"   (가까운 음 {r.note} {r.note_cents:+.0f}¢)") if r else "—"
             if line != last_line[0]:
                 print(line, flush=True)
@@ -63,7 +64,7 @@ def main(argv):
         reader = core.LevelReader(lambda *a: None, on_error=print, on_samples=on_samples)
         if not reader.start():
             return 1
-        print(f"{secs:.0f}초 동안 현을 하나씩 쳐봐 (프리셋: {tuner.PRESETS[tracker.preset][0]}, A4={tracker.a4:g} Hz)")
+        print(f"{secs:.0f}초 동안 현을 하나씩 쳐봐 (프리셋: {tracker.preset}, A4={tracker.a4:g} Hz)")
         try:
             time.sleep(secs)
         except KeyboardInterrupt:

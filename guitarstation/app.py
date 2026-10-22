@@ -22,6 +22,9 @@ from gi.repository import Adw, GLib, Gtk  # noqa: E402
 from . import core, tuner  # noqa: E402
 
 FOLLOW_DEFAULT = "기본 출력 따라가기"
+PRESET_LABELS = {"bass4": "베이스 4현", "bass5": "베이스 5현", "guitar6": "기타 6현",
+                 "chromatic": "크로매틱 (가까운 음)"}
+ADVICE = {"ok": "맞음", "far": "다른 음", "up": "조여", "down": "풀어"}
 TUNER_HOLD_S = 1.5      # keep the last reading on screen this long after the note dies
 
 CSS = b"""
@@ -245,7 +248,7 @@ class Window(Adw.ApplicationWindow):
         self.preset_model = Gtk.StringList()
         self._preset_ids = list(tuner.PRESETS)
         for pid in self._preset_ids:
-            self.preset_model.append(tuner.PRESETS[pid][0])
+            self.preset_model.append(PRESET_LABELS[pid])
         self.preset_row.set_model(self.preset_model)
         self.preset_row.set_selected(self._preset_ids.index(self.tracker.preset))
         self.preset_row.connect("notify::selected", self.on_tuner_changed)
@@ -397,9 +400,8 @@ class Window(Adw.ApplicationWindow):
     def on_samples(self, left):
         """Worker thread: ~1 ms of numpy per chunk, so it runs here directly."""
         r = self.tracker.feed(left)
-        if r is not None:
-            self._reading = r
-            self._reading_at = time.monotonic()
+        self._reading = r
+        self._reading_at = time.monotonic()
 
     def render_tuner(self):
         r = self._reading
@@ -419,7 +421,7 @@ class Window(Adw.ApplicationWindow):
             self.tune_note.add_css_class("ok")
         else:
             self.tune_note.remove_css_class("ok")
-        self.tune_advice.set_text(r.advice)
+        self.tune_advice.set_text(ADVICE[r.direction])
         self.tune_advice.remove_css_class("dim-label")
         for c in ("ok", "off"):
             self.tune_advice.remove_css_class(c)
@@ -510,11 +512,10 @@ class Window(Adw.ApplicationWindow):
         if getattr(self, "_loading", False):
             return
         pid = self._preset_ids[self.preset_row.get_selected()]
-        self.tracker.set_preset(pid)
-        self.tracker.a4 = float(self.a4_row.get_value())
-        self.tracker.reset()
+        a4 = float(self.a4_row.get_value())
+        self.tracker.request(preset=pid, a4=a4)
         self.cfg["tuner_preset"] = pid
-        self.cfg["a4"] = self.tracker.a4
+        self.cfg["a4"] = a4
         core.save_config(self.cfg)
 
     def on_setting_changed(self, *_):
