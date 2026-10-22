@@ -1,0 +1,367 @@
+# Korean translation for guitar-station.
+# This file is distributed under the same license as the guitar-station package.
+msgid ""
+msgstr ""
+"Project-Id-Version: guitar-station 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-22 13:40+0900\n"
+"PO-Revision-Date: 2026-10-22 13:30+0900\n"
+"Last-Translator: Jay Cho\n"
+"Language-Team: Korean\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "(* = chosen in guitar-station, d = system default)"
+msgstr "(* = 기타 스테이션에서 고른 장치, d = 시스템 기본)"
+
+msgid ""
+"A forgotten monitor keeps pickup hum in your headphones. Works while this "
+"window is open."
+msgstr ""
+"켜둔 채 잊으면 픽업 험이 헤드폰에 계속 섞여. 이 창이 열려 있는 동안만 동작해."
+
+msgid "About Guitar Station"
+msgstr "기타 스테이션 정보"
+
+msgid "Already on. Use `guitar-monitor on --restart` to apply new settings."
+msgstr "이미 켜져 있어. 바뀐 설정을 적용하려면 `guitar-monitor on --restart`."
+
+msgid "Bass, 4 strings"
+msgstr "베이스 4현"
+
+msgid "Bass, 5 strings"
+msgstr "베이스 5현"
+
+msgid "Buffer size"
+msgstr "버퍼 크기"
+
+msgid "Can't reach PipeWire."
+msgstr "PipeWire에 연결할 수 없어."
+
+msgid "Channel"
+msgstr "채널"
+
+msgid "Choose an input…"
+msgstr "입력 장치를 골라줘…"
+
+msgid "Chromatic (nearest note)"
+msgstr "크로매틱 (가까운 음)"
+
+msgid "Clipping happened. Turn the gain down."
+msgstr "클리핑이 있었어. 게인을 낮춰."
+
+#, python-brace-format
+msgid "Clipping on {channels}. Turn the gain down."
+msgstr "{channels}에서 클리핑. 게인을 낮춰."
+
+msgid "Control guitar-station from a terminal."
+msgstr "터미널에서 기타 스테이션을 제어해."
+
+#, python-brace-format
+msgid "Could not start pw-cat: {error}"
+msgstr "pw-cat을 시작하지 못했어: {error}"
+
+#, python-brace-format
+msgid "Couldn't start monitoring: {reason}"
+msgstr "모니터링을 시작하지 못했어: {reason}"
+
+#, python-brace-format
+msgid "Couldn't stop monitoring: {reason}"
+msgstr "모니터링을 끄지 못했어: {reason}"
+
+msgid "Device"
+msgstr "장치"
+
+msgid "Different note"
+msgstr "다른 음"
+
+msgid "Dismiss"
+msgstr "닫기"
+
+#, python-brace-format
+msgid "Follow system output ({name})"
+msgstr "시스템 출력 따라가기 ({name})"
+
+msgid "Guitar Station"
+msgstr "기타 스테이션"
+
+msgid "Guitar, 6 strings"
+msgstr "기타 6현"
+
+msgid "In tune"
+msgstr "맞음"
+
+msgid "Input"
+msgstr "입력"
+
+#, python-brace-format
+msgid "Input {n} ({position})"
+msgstr "Input {n} ({position})"
+
+msgid "Inputs:"
+msgstr "입력:"
+
+msgid "Instrument"
+msgstr "악기"
+
+msgid ""
+"Keeps playing after this window closes. Turn it off here or with “guitar-"
+"monitor off”."
+msgstr "창을 닫아도 계속 나와. 여기서 끄거나 “guitar-monitor off”로 꺼."
+
+msgid "Monitor and tune a guitar or bass through a USB interface on PipeWire."
+msgstr "PipeWire에서 USB 인터페이스로 기타·베이스를 모니터링하고 튜닝하는 앱."
+
+msgid ""
+"Monitoring started, but the input or the output could not be connected, so "
+"it was turned off again."
+msgstr "모니터링은 시작됐지만 입력이나 출력을 연결하지 못해서 다시 껐어."
+
+#, python-brace-format
+msgid ""
+"Monitoring stopped right after starting. See: journalctl --user -u {unit}"
+msgstr "모니터링이 시작 직후 멈췄어. 확인: journalctl --user -u {unit}"
+
+#, python-brace-format
+msgid "Monitoring stopped unexpectedly. See: journalctl --user -u {unit}"
+msgstr "모니터링이 예기치 않게 멈췄어. 확인: journalctl --user -u {unit}"
+
+msgid "Mono"
+msgstr "모노"
+
+msgid "No audio arrived from the input."
+msgstr "입력에서 오디오가 들어오지 않았어."
+
+msgid "No input selected"
+msgstr "선택한 입력이 없어"
+
+#, python-brace-format
+msgid "No signal for {min} minutes, so monitoring was turned off."
+msgstr "{min}분 동안 신호가 없어서 모니터링을 껐어."
+
+msgid "No usable input. Pick one in the app or check `guitar-monitor devices`."
+msgstr ""
+"쓸 수 있는 입력이 없어. 앱에서 고르거나 `guitar-monitor devices`로 확인해줘."
+
+msgid ""
+"Off. The meters and the tuner work anyway, so you can set the gain first."
+msgstr ""
+"꺼져 있음. 레벨 미터와 튜너는 계속 동작하니까 게인을 미리 맞출 수 있어."
+
+msgid "Output"
+msgstr "출력"
+
+msgid "Outputs:"
+msgstr "출력:"
+
+msgid "Pick an input to monitor."
+msgstr "모니터링할 입력을 골라줘."
+
+msgid "Pick the channel your instrument is on."
+msgstr "악기가 꽂힌 채널을 골라줘."
+
+msgid "PipeWire default"
+msgstr "PipeWire 기본값"
+
+msgid "Play a string"
+msgstr "현을 쳐봐"
+
+msgid ""
+"Play and turn the gain knob on the interface until the selected channel "
+"reads “good” (-14 to -5 dB)."
+msgstr ""
+"연주하면서 인터페이스의 Gain 노브를 돌려 선택한 채널이 “적정”(-14 ~ -5 dB)이 "
+"되게 맞춰."
+
+#, python-brace-format
+msgid "Play one string at a time for {secs} s (preset {preset}, A4 = {a4} Hz)."
+msgstr "{secs}초 동안 현을 하나씩 쳐봐 (프리셋 {preset}, A4 = {a4} Hz)."
+
+msgid "Play one string at a time. Green means in tune."
+msgstr "현을 하나만 울려. 바늘이 가운데 초록 구간에 들어오면 맞은 거야."
+
+msgid "Play through"
+msgstr "내보낼 곳"
+
+msgid "Played on both sides of the output"
+msgstr "출력 양쪽으로 똑같이 나가"
+
+#, python-brace-format
+msgid "Playing {what} through {output}."
+msgstr "{what}을(를) {output}(으)로 내보내는 중."
+
+msgid "Readings snap to the nearest open string"
+msgstr "가장 가까운 개방현 기준으로 알려줘"
+
+msgid "Reference A4"
+msgstr "기준음 A4"
+
+msgid ""
+"Requested per PipeWire cycle. Smaller is less delay, but may crackle on a "
+"busy system."
+msgstr ""
+"PipeWire 한 주기마다 요청하는 크기. 작을수록 지연이 줄지만 시스템이 바쁘면 소"
+"리가 끊길 수 있어."
+
+msgid "Start monitoring"
+msgstr "모니터링 켜기"
+
+msgid "Starting…"
+msgstr "켜는 중…"
+
+msgid "Stop monitoring"
+msgstr "모니터링 끄기"
+
+msgid "Stopping…"
+msgstr "끄는 중…"
+
+msgid "The pinned output disappeared, so monitoring was turned off."
+msgstr "고정한 출력 장치가 사라져서 모니터링을 껐어."
+
+msgid "The pinned output isn't connected."
+msgstr "고정한 출력 장치가 연결돼 있지 않아."
+
+msgid "The saved channel doesn't exist on this input."
+msgstr "저장된 채널이 이 입력에 없어."
+
+msgid "Tune down"
+msgstr "풀어"
+
+msgid "Tune up"
+msgstr "조여"
+
+msgid "Tuner"
+msgstr "튜너"
+
+#, python-brace-format
+msgid "Turn off after {min} minutes of silence"
+msgstr "{min}분 동안 무신호면 끄기"
+
+msgid "Usually 440 Hz"
+msgstr "보통 440 Hz"
+
+msgid "a bit hot"
+msgstr "살짝 높음"
+
+#, python-brace-format
+msgid "buffer     : {value}"
+msgstr "버퍼       : {value}"
+
+#, python-brace-format
+msgid "could not stop {unit}"
+msgstr "{unit}을(를) 멈추지 못했어"
+
+msgid "different note"
+msgstr "다른 음"
+
+msgid "expected a number of seconds between 0 and 3600"
+msgstr "0초보다 크고 3600초 이하인 숫자를 넣어줘"
+
+#, python-brace-format
+msgid "failed: {reason}"
+msgstr "실패: {reason}"
+
+msgid "gain low"
+msgstr "게인 낮음"
+
+msgid "good"
+msgstr "적정"
+
+msgid "in tune"
+msgstr "맞음"
+
+msgid "input      : not connected or not chosen"
+msgstr "입력       : 연결 안 됨 또는 선택 안 됨"
+
+#, python-brace-format
+msgid "input      : {device}, channel {channel}"
+msgstr "입력       : {device}, 채널 {channel}"
+
+msgid "list inputs and outputs"
+msgstr "입력·출력 장치 목록"
+
+msgid "measure peak levels"
+msgstr "피크 레벨 측정"
+
+#, python-brace-format
+msgid "monitoring : {state}"
+msgstr "모니터링   : {state}"
+
+#, python-brace-format
+msgid "nearest note {note} {cents}¢"
+msgstr "가까운 음 {note} {cents}¢"
+
+msgid "off"
+msgstr "꺼짐"
+
+msgid "on"
+msgstr "켜짐"
+
+msgid "output     : follows the system output"
+msgstr "출력       : 시스템 출력을 따라감"
+
+#, python-brace-format
+msgid "output     : {name} (pinned)"
+msgstr "출력       : {name} (고정)"
+
+#, python-brace-format
+msgid "output     : {name} (pinned, not connected)"
+msgstr "출력       : {name} (고정, 연결 안 됨)"
+
+msgid "print tuner readings"
+msgstr "튜너 값 출력"
+
+msgid "restart if already on"
+msgstr "이미 켜져 있으면 다시 시작"
+
+msgid "show monitoring state and the saved selection"
+msgstr "모니터링 상태와 저장된 선택 보기"
+
+msgid "silent"
+msgstr "무음"
+
+msgid "start monitoring with the saved settings"
+msgstr "저장된 설정으로 모니터링 켜기"
+
+msgid "stop monitoring"
+msgstr "모니터링 끄기"
+
+msgid "the selected input"
+msgstr "선택한 입력"
+
+msgid "too hot"
+msgstr "너무 높음"
+
+msgid "tune down"
+msgstr "풀어"
+
+msgid "tune up"
+msgstr "조여"
+
+#, python-brace-format
+msgid "{channel} of {device}"
+msgstr "{device}의 {channel}"
+
+#, python-brace-format
+msgid "{freq} Hz   {cents}¢   target {target} Hz"
+msgstr "{freq} Hz   {cents}¢   목표 {target} Hz"
+
+#, python-brace-format
+msgid "{name} (not available)"
+msgstr "{name} (사용할 수 없음)"
+
+#, python-brace-format
+msgid "{name} (not connected)"
+msgstr "{name} (연결 안 됨)"
+
+#, python-brace-format
+msgid "{n} samples"
+msgstr "{n} 샘플"
+
+#, python-brace-format
+msgid "{n} samples ({ms} ms)"
+msgstr "{n} 샘플 ({ms} ms)"
+

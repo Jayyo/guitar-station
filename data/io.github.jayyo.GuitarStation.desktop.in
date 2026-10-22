@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Guitar Station
+Name[ko]=기타 스테이션
+GenericName=Instrument Monitor
+Comment=Hear your guitar or bass through the desktop output, with meters and a tuner
+Comment[ko]=USB 인터페이스로 기타·베이스를 데스크톱 출력으로 듣고 튜닝
+Exec=@BINDIR@/guitar-station
+Icon=io.github.jayyo.GuitarStation
+Terminal=false
+Categories=AudioVideo;Audio;Music;
+Keywords=guitar;bass;tuner;monitor;pipewire;기타;베이스;튜너;
+StartupNotify=true

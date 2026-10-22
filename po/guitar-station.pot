@@ -1,0 +1,362 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the guitar-station package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: guitar-station\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-22 13:40+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "(* = chosen in guitar-station, d = system default)"
+msgstr ""
+
+msgid ""
+"A forgotten monitor keeps pickup hum in your headphones. Works while this "
+"window is open."
+msgstr ""
+
+msgid "About Guitar Station"
+msgstr ""
+
+msgid "Already on. Use `guitar-monitor on --restart` to apply new settings."
+msgstr ""
+
+msgid "Bass, 4 strings"
+msgstr ""
+
+msgid "Bass, 5 strings"
+msgstr ""
+
+msgid "Buffer size"
+msgstr ""
+
+msgid "Can't reach PipeWire."
+msgstr ""
+
+msgid "Channel"
+msgstr ""
+
+msgid "Choose an input…"
+msgstr ""
+
+msgid "Chromatic (nearest note)"
+msgstr ""
+
+msgid "Clipping happened. Turn the gain down."
+msgstr ""
+
+#, python-brace-format
+msgid "Clipping on {channels}. Turn the gain down."
+msgstr ""
+
+msgid "Control guitar-station from a terminal."
+msgstr ""
+
+#, python-brace-format
+msgid "Could not start pw-cat: {error}"
+msgstr ""
+
+#, python-brace-format
+msgid "Couldn't start monitoring: {reason}"
+msgstr ""
+
+#, python-brace-format
+msgid "Couldn't stop monitoring: {reason}"
+msgstr ""
+
+msgid "Device"
+msgstr ""
+
+msgid "Different note"
+msgstr ""
+
+msgid "Dismiss"
+msgstr ""
+
+#, python-brace-format
+msgid "Follow system output ({name})"
+msgstr ""
+
+msgid "Guitar Station"
+msgstr ""
+
+msgid "Guitar, 6 strings"
+msgstr ""
+
+msgid "In tune"
+msgstr ""
+
+msgid "Input"
+msgstr ""
+
+#, python-brace-format
+msgid "Input {n} ({position})"
+msgstr ""
+
+msgid "Inputs:"
+msgstr ""
+
+msgid "Instrument"
+msgstr ""
+
+msgid ""
+"Keeps playing after this window closes. Turn it off here or with “guitar-"
+"monitor off”."
+msgstr ""
+
+msgid "Monitor and tune a guitar or bass through a USB interface on PipeWire."
+msgstr ""
+
+msgid ""
+"Monitoring started, but the input or the output could not be connected, so "
+"it was turned off again."
+msgstr ""
+
+#, python-brace-format
+msgid ""
+"Monitoring stopped right after starting. See: journalctl --user -u {unit}"
+msgstr ""
+
+#, python-brace-format
+msgid "Monitoring stopped unexpectedly. See: journalctl --user -u {unit}"
+msgstr ""
+
+msgid "Mono"
+msgstr ""
+
+msgid "No audio arrived from the input."
+msgstr ""
+
+msgid "No input selected"
+msgstr ""
+
+#, python-brace-format
+msgid "No signal for {min} minutes, so monitoring was turned off."
+msgstr ""
+
+msgid "No usable input. Pick one in the app or check `guitar-monitor devices`."
+msgstr ""
+
+msgid ""
+"Off. The meters and the tuner work anyway, so you can set the gain first."
+msgstr ""
+
+msgid "Output"
+msgstr ""
+
+msgid "Outputs:"
+msgstr ""
+
+msgid "Pick an input to monitor."
+msgstr ""
+
+msgid "Pick the channel your instrument is on."
+msgstr ""
+
+msgid "PipeWire default"
+msgstr ""
+
+msgid "Play a string"
+msgstr ""
+
+msgid ""
+"Play and turn the gain knob on the interface until the selected channel "
+"reads “good” (-14 to -5 dB)."
+msgstr ""
+
+#, python-brace-format
+msgid "Play one string at a time for {secs} s (preset {preset}, A4 = {a4} Hz)."
+msgstr ""
+
+msgid "Play one string at a time. Green means in tune."
+msgstr ""
+
+msgid "Play through"
+msgstr ""
+
+msgid "Played on both sides of the output"
+msgstr ""
+
+#, python-brace-format
+msgid "Playing {what} through {output}."
+msgstr ""
+
+msgid "Readings snap to the nearest open string"
+msgstr ""
+
+msgid "Reference A4"
+msgstr ""
+
+msgid ""
+"Requested per PipeWire cycle. Smaller is less delay, but may crackle on a "
+"busy system."
+msgstr ""
+
+msgid "Start monitoring"
+msgstr ""
+
+msgid "Starting…"
+msgstr ""
+
+msgid "Stop monitoring"
+msgstr ""
+
+msgid "Stopping…"
+msgstr ""
+
+msgid "The pinned output disappeared, so monitoring was turned off."
+msgstr ""
+
+msgid "The pinned output isn't connected."
+msgstr ""
+
+msgid "The saved channel doesn't exist on this input."
+msgstr ""
+
+msgid "Tune down"
+msgstr ""
+
+msgid "Tune up"
+msgstr ""
+
+msgid "Tuner"
+msgstr ""
+
+#, python-brace-format
+msgid "Turn off after {min} minutes of silence"
+msgstr ""
+
+msgid "Usually 440 Hz"
+msgstr ""
+
+msgid "a bit hot"
+msgstr ""
+
+#, python-brace-format
+msgid "buffer     : {value}"
+msgstr ""
+
+#, python-brace-format
+msgid "could not stop {unit}"
+msgstr ""
+
+msgid "different note"
+msgstr ""
+
+msgid "expected a number of seconds between 0 and 3600"
+msgstr ""
+
+#, python-brace-format
+msgid "failed: {reason}"
+msgstr ""
+
+msgid "gain low"
+msgstr ""
+
+msgid "good"
+msgstr ""
+
+msgid "in tune"
+msgstr ""
+
+msgid "input      : not connected or not chosen"
+msgstr ""
+
+#, python-brace-format
+msgid "input      : {device}, channel {channel}"
+msgstr ""
+
+msgid "list inputs and outputs"
+msgstr ""
+
+msgid "measure peak levels"
+msgstr ""
+
+#, python-brace-format
+msgid "monitoring : {state}"
+msgstr ""
+
+#, python-brace-format
+msgid "nearest note {note} {cents}¢"
+msgstr ""
+
+msgid "off"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "output     : follows the system output"
+msgstr ""
+
+#, python-brace-format
+msgid "output     : {name} (pinned)"
+msgstr ""
+
+#, python-brace-format
+msgid "output     : {name} (pinned, not connected)"
+msgstr ""
+
+msgid "print tuner readings"
+msgstr ""
+
+msgid "restart if already on"
+msgstr ""
+
+msgid "show monitoring state and the saved selection"
+msgstr ""
+
+msgid "silent"
+msgstr ""
+
+msgid "start monitoring with the saved settings"
+msgstr ""
+
+msgid "stop monitoring"
+msgstr ""
+
+msgid "the selected input"
+msgstr ""
+
+msgid "too hot"
+msgstr ""
+
+msgid "tune down"
+msgstr ""
+
+msgid "tune up"
+msgstr ""
+
+#, python-brace-format
+msgid "{channel} of {device}"
+msgstr ""
+
+#, python-brace-format
+msgid "{freq} Hz   {cents}¢   target {target} Hz"
+msgstr ""
+
+#, python-brace-format
+msgid "{name} (not available)"
+msgstr ""
+
+#, python-brace-format
+msgid "{name} (not connected)"
+msgstr ""
+
+#, python-brace-format
+msgid "{n} samples"
+msgstr ""
+
+#, python-brace-format
+msgid "{n} samples ({ms} ms)"
+msgstr ""
