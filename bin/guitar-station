@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Launcher for the guitar-station GUI."""
+"""Launcher for the guitar-station window."""
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
+here = os.path.dirname(os.path.realpath(__file__))
+for root in (os.path.join(here, "..", "share", "guitar-station"), os.path.join(here, "..")):
+    if os.path.isdir(os.path.join(root, "guitarstation")):
+        sys.path.insert(0, os.path.abspath(root))
+        break
+
 from guitarstation.app import main  # noqa: E402
 
 sys.exit(main())

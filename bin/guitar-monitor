@@ -1,85 +1,14 @@
 #!/usr/bin/env python3
-"""Headless control for guitar monitoring: on | off | status | level [secs] | tune [secs]."""
+"""Command-line control for guitar-station: status, on, off, devices, level, tune."""
 import os
 import sys
-import time
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
-from guitarstation import core  # noqa: E402
+here = os.path.dirname(os.path.realpath(__file__))
+for root in (os.path.join(here, "..", "share", "guitar-station"), os.path.join(here, "..")):
+    if os.path.isdir(os.path.join(root, "guitarstation")):
+        sys.path.insert(0, os.path.abspath(root))
+        break
 
+from guitarstation.cli import main  # noqa: E402
 
-def main(argv):
-    cmd = argv[1] if len(argv) > 1 else "status"
-    cfg = core.load_config()
-
-    if cmd == "on":
-        ok, msg = core.start(sink_name=core.resolve_sink(cfg.get("output")),
-                             mono=cfg["mono"], quantum=cfg["quantum"])
-        print(msg)
-        return 0 if ok else 1
-
-    if cmd == "off":
-        print(core.stop()[1])
-        return 0
-
-    if cmd == "level":
-        secs = float(argv[2]) if len(argv) > 2 else 5.0
-        peak = [core.METER_FLOOR_DB, core.METER_FLOOR_DB]
-        clipped = [False]
-
-        def on_level(l, r, clip):
-            peak[0] = max(peak[0], l)
-            peak[1] = max(peak[1], r)
-            if clip:
-                clipped[0] = True
-
-        reader = core.LevelReader(on_level, on_error=print)
-        if not reader.start():
-            return 1
-        time.sleep(secs)
-        reader.stop()
-        verdict, _ = core.gain_verdict(peak[0])
-        print(f"Input 1  peak {peak[0]:6.1f} dBFS  -> {verdict}")
-        print(f"Input 2  peak {peak[1]:6.1f} dBFS")
-        if clipped[0]:
-            print("클리핑 발생 — 게인을 낮춰")
-        return 0
-
-    if cmd == "tune":
-        from guitarstation import tuner
-        secs = float(argv[2]) if len(argv) > 2 else 15.0
-        tracker = tuner.PitchTracker(preset=cfg.get("tuner_preset", tuner.DEFAULT_PRESET),
-                                     a4=cfg.get("a4", tuner.DEFAULT_A4))
-        last_line = [None]
-
-        def on_samples(left):
-            r = tracker.feed(left)
-            advice = {"ok": "맞음", "far": "다른 음", "up": "조여", "down": "풀어"}[r.direction]
-            line = (f"{r.target:<3} {r.freq:7.2f} Hz  {r.cents:+5.1f}¢  {advice}"
-                    f"   (가까운 음 {r.note} {r.note_cents:+.0f}¢)") if r else "—"
-            if line != last_line[0]:
-                print(line, flush=True)
-                last_line[0] = line
-
-        reader = core.LevelReader(lambda *a: None, on_error=print, on_samples=on_samples)
-        if not reader.start():
-            return 1
-        print(f"{secs:.0f}초 동안 현을 하나씩 쳐봐 (프리셋: {tracker.preset}, A4={tracker.a4:g} Hz)")
-        try:
-            time.sleep(secs)
-        except KeyboardInterrupt:
-            pass
-        reader.stop()
-        return 0
-
-    st = core.status()
-    print(f"인터페이스 : {'연결됨' if st['connected'] else '연결 안 됨'}")
-    print(f"기타 모드  : {'ON' if st['active'] else 'OFF'}")
-    print(f"기본 출력  : {st['default_sink'] or '?'}")
-    if st["quantum"]:
-        print(f"지연       : {core.quantum_latency_ms(st['quantum'])} ms")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+sys.exit(main())

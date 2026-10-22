@@ -1,0 +1,294 @@
+[
+ {
+  "id": 10,
+  "type": "PipeWire:Interface:Device",
+  "info": {
+   "props": {
+    "device.name": "alsa_card.usb-Example_Audio_Interface_00000000-00",
+    "device.description": "Example Audio Interface",
+    "device.bus": "usb",
+    "device.api": "alsa"
+   }
+  }
+ },
+ {
+  "id": 11,
+  "type": "PipeWire:Interface:Device",
+  "info": {
+   "props": {
+    "device.name": "alsa_card.usb-Example_Webcam_1234-02",
+    "device.description": "Example Webcam",
+    "device.bus": "usb",
+    "device.api": "alsa",
+    "device.form-factor": "webcam"
+   }
+  }
+ },
+ {
+  "id": 12,
+  "type": "PipeWire:Interface:Device",
+  "info": {
+   "props": {
+    "device.name": "alsa_card.usb-Example_Headset-00",
+    "device.description": "Example Headset",
+    "device.bus": "usb",
+    "device.api": "alsa",
+    "device.form-factor": "headset"
+   }
+  }
+ },
+ {
+  "id": 13,
+  "type": "PipeWire:Interface:Device",
+  "info": {
+   "props": {
+    "device.name": "alsa_card.pci-0000_0a_00.4",
+    "device.description": "Onboard Audio",
+    "device.bus": "pci",
+    "device.api": "alsa"
+   }
+  }
+ },
+ {
+  "id": 40,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "alsa_input.usb-Example_Audio_Interface_00000000-00.analog-stereo",
+    "node.description": "Example Audio Interface Analog Stereo",
+    "media.class": "Audio/Source",
+    "device.id": 10,
+    "alsa.device": 0
+   }
+  }
+ },
+ {
+  "id": 41,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "alsa_input.usb-Example_Webcam_1234-02.analog-stereo",
+    "node.description": "Example Webcam Analog Stereo",
+    "media.class": "Audio/Source",
+    "device.id": 11,
+    "alsa.device": 0
+   }
+  }
+ },
+ {
+  "id": 42,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "alsa_input.usb-Example_Headset-00.mono-fallback",
+    "node.description": "Example Headset Mono",
+    "media.class": "Audio/Source",
+    "device.id": 12,
+    "alsa.device": 0
+   }
+  }
+ },
+ {
+  "id": 43,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "alsa_output.pci-0000_0a_00.4.analog-stereo",
+    "node.description": "Onboard Audio Analog Stereo",
+    "media.class": "Audio/Sink",
+    "device.id": 13,
+    "alsa.device": 0
+   }
+  }
+ },
+ {
+  "id": 44,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "alsa_output.usb-Example_Headset-00.analog-stereo",
+    "node.description": "Example Headset Analog Stereo",
+    "media.class": "Audio/Sink",
+    "device.id": 12,
+    "alsa.device": 0
+   }
+  }
+ },
+ {
+  "id": 45,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "virtual_source",
+    "node.description": "Virtual Source",
+    "media.class": "Audio/Source/Virtual"
+   }
+  }
+ },
+ {
+  "id": 46,
+  "type": "PipeWire:Interface:Node",
+  "info": {
+   "props": {
+    "node.name": "some.stream",
+    "node.description": "A playback stream",
+    "media.class": "Stream/Output/Audio"
+   }
+  }
+ },
+ {
+  "id": 50,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 40,
+    "port.id": 0,
+    "port.name": "capture_FL",
+    "audio.channel": "FL",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 51,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 40,
+    "port.id": 1,
+    "port.name": "capture_FR",
+    "audio.channel": "FR",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 52,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 41,
+    "port.id": 1,
+    "port.name": "capture_FR",
+    "audio.channel": "FR",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 53,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 41,
+    "port.id": 0,
+    "port.name": "capture_FL",
+    "audio.channel": "FL",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 54,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 42,
+    "port.id": 0,
+    "port.name": "capture_MONO",
+    "audio.channel": "MONO",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 55,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 43,
+    "port.id": 0,
+    "port.name": "playback_FL",
+    "audio.channel": "FL",
+    "port.direction": "in"
+   }
+  }
+ },
+ {
+  "id": 56,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 43,
+    "port.id": 1,
+    "port.name": "playback_FR",
+    "audio.channel": "FR",
+    "port.direction": "in"
+   }
+  }
+ },
+ {
+  "id": 57,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 43,
+    "port.id": 2,
+    "port.name": "monitor_FL",
+    "audio.channel": "FL",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 58,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 45,
+    "port.id": 0,
+    "port.name": "capture_FL",
+    "audio.channel": "FL",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 59,
+  "type": "PipeWire:Interface:Port",
+  "info": {
+   "props": {
+    "node.id": 45,
+    "port.id": 1,
+    "port.name": "capture_FR",
+    "audio.channel": "FR",
+    "port.direction": "out"
+   }
+  }
+ },
+ {
+  "id": 60,
+  "type": "PipeWire:Interface:Metadata",
+  "props": {
+   "metadata.name": "default"
+  },
+  "metadata": [
+   {
+    "subject": 0,
+    "key": "default.audio.sink",
+    "type": "Spa:String:JSON",
+    "value": {
+     "name": "alsa_output.pci-0000_0a_00.4.analog-stereo"
+    }
+   },
+   {
+    "subject": 0,
+    "key": "default.audio.source",
+    "type": "Spa:String:JSON",
+    "value": {
+     "name": "alsa_input.usb-Example_Webcam_1234-02.analog-stereo"
+    }
+   }
+  ]
+ }
+]
