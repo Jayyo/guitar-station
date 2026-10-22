@@ -1,56 +1,111 @@
-# 기타 스테이션 (guitar-station)
+# Guitar Station
 
-일렉기타/베이스를 PreSonus AudioBox USB 96에 물려 데스크톱 출력으로 모니터링하는 GTK4 앱.
-매번 `pw-loopback` + `pw-link`를 손으로 조립하지 않기 위해 만들었다.
+A small GTK4 app for Linux that lets you hear a guitar or bass plugged into a USB audio interface through whatever your desktop is playing on. It also shows input meters for setting the gain knob and has a tuner. Everything goes through PipeWire.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshot-dark.webp">
+  <img src="docs/screenshot-light.webp" width="420" alt="Guitar Station monitoring input 1 of a USB interface, with meters and the tuner reading A2, 4 cents flat">
+</picture>
+
+I plug a bass or guitar into a PreSonus AudioBox USB 96 on an Ubuntu desktop. Hearing it on my headphones meant wiring `pw-loopback` and `pw-link` by hand every time, the box delivers input 1 on the left channel only, and re-plugging it resets the wiring. This app does that wiring once and keeps it in place.
+
+[한국어 설명은 아래에 있습니다.](#한국어)
+
+## What it does
+
+- **Monitoring with one button.** Pick the interface and the channel your instrument is on; that one channel is played on both sides of the output. Monitoring runs as a systemd user service, so it keeps playing after you close the window, and `guitar-monitor off` stops it from a terminal.
+- **Output follows the system default**, or stays on an output you pin. A pinned output is not swapped for another device: if it disappears, monitoring stops.
+- **A meter for every channel of the input**, with a plain verdict for the selected one (gain low / good / a bit hot / too hot) and a clipping warning. They run whether monitoring is on or off, so you can set the gain before any sound goes anywhere.
+- **Tuner** for 4- and 5-string bass, 6-string guitar or chromatic, with an adjustable A4 (415 to 466 Hz).
+- **Optional auto-off** after 10 minutes of silence, because a forgotten monitor keeps pickup hum in your headphones.
+- English and Korean UI.
+
+## Install
+
+Tested on Ubuntu 24.04 (PipeWire 1.0.5, WirePlumber 0.4.17, GTK 4.14, libadwaita 1.5).
+
+```sh
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-4.0 gir1.2-adw-1 \
+                 python3-numpy pipewire-bin wireplumber gettext
+git clone https://github.com/Jayyo/guitar-station
+cd guitar-station
+make install                 # into ~/.local; PREFIX=/usr/local also works
 ```
-guitar-station          # GUI (GNOME 앱 목록 "기타 스테이션")
-guitar-monitor on       # 헤드리스 켜기
-guitar-monitor off      # 끄기
-guitar-monitor level 5  # 5초 재서 게인 판정
-guitar-monitor tune 15  # 15초 동안 튜너 (터미널 출력)
-guitar-monitor status
+
+This installs `guitar-station` (the window) and `guitar-monitor` (the CLI) into `~/.local/bin`, the package into `~/.local/share/guitar-station`, and a desktop entry, so it shows up in the app grid. `make uninstall` removes those again; your settings in `~/.config/guitar-station/` stay.
+
+To run straight from the checkout instead: `./bin/guitar-station` (run `make` first if you want the Korean translation).
+
+## Command line
+
+```console
+$ guitar-monitor devices
+Inputs:
+ * USB Audio Interface Analog Stereo  [FL, FR]
+   HD Audio Controller Analog Stereo  [FL, FR]
+Outputs:
+ d HD Audio Controller Analog Stereo
+   Headset Analog Stereo
+$ guitar-monitor level 3       # peak per channel over 3 s, verdict for the chosen one
+$ guitar-monitor tune 15       # tuner readings in the terminal
+$ guitar-monitor on            # start with the settings saved by the app
+$ guitar-monitor off
 ```
 
-## 앱이 대신 해주는 것
+## How it works
 
-- **Input 1 → 좌우 양쪽 복제.** Input 1은 왼쪽 채널로만 들어와서 그냥 루프백하면 한쪽에서만 들린다.
-  `pw-loopback --capture-props='audio.position=[MONO]'`는 실측에서 안 먹었고, `pw-link`로
-  `capture_FL`을 `input_FR`에도 손으로 연결하는 것만 동작했다.
-- **재연결 복구.** USB를 다시 꽂으면 노드가 새로 생기면서 그 수동 배선이 기본값으로 되돌아간다.
-  앱은 켤 때마다 다시 건다.
-- **출력 추종.** 기본 sink는 수시로 바뀐다(인터페이스를 꽂으면 자동 전환, 헤드셋을 켜면 또 전환).
-  출력을 "기본 출력 따라가기"로 두면 루프백이 알아서 따라간다. 특정 장치로 고정도 가능.
-- **실시간 레벨 미터.** 모니터링이 꺼져 있어도 동작하므로, 소리를 어디로 보내기 전에 Gain 노브를
-  맞출 수 있다. 목표는 peak -14 ~ -5 dBFS, 클리핑 0.
-- **튜너.** 현 하나를 울리면 가장 가까운 개방현(베이스 4/5현·기타 6현 프리셋, 또는 크로매틱)과
-  센트 오차를 바늘로 보여준다. ±3센트면 초록. 검출은 `guitarstation/tuner.py`의 YIN(FFT 차분함수,
-  8192 샘플 창)이며 5현 베이스 저음 B0(30.9 Hz)까지 잡는다. 합성음 110케이스 오차 <1센트,
-  실제 베이스 스템 지속음 ±2센트, 청크당 0.8 ms. 기준음 A4 조절 가능(415~466).
-- **무신호 자동 정지(선택).** 켜둔 채 잊으면 기타 픽업이 줍는 험이 헤드폰에 계속 섞인다.
+**Routing.** "Start monitoring" launches a transient user service (`systemd-run --user --collect`) that runs `python3 -m guitarstation.monitor`. That process starts a `pw-loopback` whose capture side has `node.autoconnect=false`, so WirePlumber never wires the interface's stereo pair into it. Once a second it checks the links and makes sure exactly one input port feeds both loopback inputs, and nothing else does. When the interface is re-plugged its links disappear and its node may come back under a different name; the next check finds it again and restores the links. The playback side follows the default sink, or uses `target.object` plus `node.dont-reconnect` for a pinned output, and the same process ends monitoring when that output goes away.
 
-## 구조
+**Buffer size.** The loopback requests `node.latency=<n>/48000`. PipeWire takes such requests into account when it picks the graph's cycle size (within its configured limits), and the request goes away with the loopback; nothing global is changed. On my setup the graph ran at 256 samples while monitoring and went back afterwards. The number in the UI is a requested cycle size, not the end-to-end delay; the interface's own buffers and the output device add to it.
 
-- `guitarstation/core.py` — PipeWire 조회·루프백 제어·레벨 측정. GUI 의존성 없음:
-  `python3 -c "from guitarstation import core; print(core.status())"`
-- `guitarstation/tuner.py` — YIN 피치 검출 + 음이름/개방현 계산. numpy만 쓴다. `tests/test_tuner.py`로 검증.
-- `guitarstation/app.py` — GTK4/libadwaita 창. core를 렌더링만 한다.
-- `bin/guitar-station` (GUI) / `bin/guitar-monitor` (CLI) — 둘 다 같은 core를 쓴다.
+**Device identity.** PipeWire node names change across re-plugs and profile switches (`...analog-stereo`, `...pro-input-0`, `...mono-fallback.2`), so inputs and outputs are remembered by card name plus ALSA PCM device number, falling back to the exact node name (which is all a virtual device has). If the saved channel no longer exists, the app says so instead of picking another one.
 
-설정: `~/.config/guitar-station/config.json`
+**Meters and tuner** share one `pw-cat` capture of the whole device with `stream.dont-remix`, so each channel arrives untouched. The tuner is YIN (de Cheveigné and Kawahara, 2002) with the difference function computed through an FFT: an 8192-sample window plus 1920 samples of lag covers the 30.9 Hz low B of a 5-string bass and costs 1 to 2 ms of numpy per update. Readings are median-smoothed over five estimates. When a new pluck arrives, analysis waits until the window lies entirely after the attack, because a window that straddles it reads several cents off. The first reading appears about a quarter of a second after you start playing.
 
-## 함정 메모
+On synthetic plucked tones (B0 to E4, detuned -20 to +30 cents, with and without a weak fundamental) the steady-state error stays under 1 cent; `tests/test_tuner.py` checks that, along with chunking, re-plucks, silence, noise and stale readings.
 
-- **`Adw.PreferencesGroup.add()`에 row가 아닌 위젯을 넣으면 그 그룹의 row들 *아래*에 그려진다.**
-  튜너 표시부(글자·바늘)를 프리셋 row 위에 두려면 그룹을 둘로 나눠야 했다.
-- **헤드리스 GUI 테스트는 application_id를 바꿔서 띄울 것.** 같은 id로 띄우면 D-Bus로 이미 떠 있는
-  사용자 창을 activate만 하고 즉시 종료해 콜백이 하나도 안 돈다(Xvfb 안에서도 세션 버스는 공유).
-  스크린샷은 `Gtk.WidgetPaintable` → `renderer.render_texture()` → `save_to_png`.
+## Things I ran into
 
-- **PipeWire 노드 이름을 저장하면 안 된다.** 같은 G733이 `iec958-stereo` ↔ `analog-stereo`로 바뀐다.
-  출력 장치는 프로파일 접미사를 뗀 접두사를 지문으로 쓴다.
-- **인터페이스 입력 노드는 매번 다시 조회한다.** 재연결하면 이름이 달라진다.
-- **AudioBox는 ALSA 컨트롤이 없다** (`amixer -c 3`이 빈 출력). Gain·Mixer·Main·Phones는 전부
-  하드웨어 노브라 소프트웨어로 못 만진다. 앱이 게인을 "조절"하지 못하고 "판정"만 하는 이유.
-- **`arecord -D hw:3,0`은 PipeWire 점유 때문에 busy.** 측정은 `pw-cat --record --target <노드> -`로.
-  `pw-record --raw -`는 stdout으로 아무것도 안 뱉는다(실측 0바이트).
+- The AudioBox USB 96 has no ALSA mixer controls (`amixer -c N` prints nothing). Gain, mix and volume are hardware knobs, which is why the app judges the level instead of setting it.
+- `arecord -D hw:N,0` fails with "busy" while PipeWire holds the device. Capture through PipeWire instead.
+- Wiring the loopback by hand with `pw-link` worked reliably on PipeWire 1.0.5; setting `audio.position=[MONO]` on the loopback's capture side did not give me input 1 on both sides.
+- The same headset showed up as `...iec958-stereo` one day and `...analog-stereo` the next, which is what pushed device matching away from node names.
+
+## Limitations
+
+- Dry signal only: no amp simulation or effects.
+- Auto-off only works while the window is open. Monitoring itself keeps running without it.
+- Needs a systemd user session (`systemd-run --user`). No Flatpak; the app has to reach the host's PipeWire graph and user manager.
+- The multi-device and multi-channel code was tested against virtual PipeWire devices (2- and 4-channel); the original single-device version was used with an AudioBox USB 96. Reports from other interfaces are welcome.
+- The screenshots show a synthesized A string on a virtual input.
+
+## Development
+
+```sh
+sudo apt install python3-pytest
+make check      # pytest: tuner, PipeWire parsing, config, unit command line, CLI
+make pot        # refresh po/guitar-station.pot after changing UI strings
+```
+
+The core (`pw.py`, `core.py`, `tuner.py`, `monitor.py`) has no GTK dependency. `GUITAR_STATION_UNIT` changes the systemd unit name, which keeps test runs away from a real monitoring session.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
+
+---
+
+## 한국어
+
+USB 오디오 인터페이스에 꽂은 기타·베이스 소리를 데스크톱의 현재 출력(헤드폰, 스피커)으로 바로 들려주는 리눅스 GTK4 앱입니다. 게인 노브를 맞추기 위한 채널별 레벨 미터와 튜너가 함께 있습니다. PipeWire 기반입니다.
+
+PreSonus AudioBox USB 96으로 베이스를 칠 때마다 `pw-loopback`과 `pw-link`를 손으로 연결해야 했고, 이 인터페이스는 Input 1을 왼쪽 채널로만 보내며, USB를 다시 꽂으면 연결이 초기화됐습니다. 그 과정을 버튼 하나로 줄이려고 만들었습니다.
+
+- 인터페이스와 악기가 꽂힌 채널을 고르면 그 채널 하나를 출력 양쪽으로 똑같이 보냅니다. 모니터링은 systemd 사용자 서비스로 돌아서 창을 닫아도 계속 나오고, 터미널에서 `guitar-monitor off`로 끌 수 있습니다.
+- 출력은 시스템 기본 장치를 따라가거나 특정 장치에 고정할 수 있습니다. 고정한 장치가 사라지면 다른 장치로 넘어가지 않고 모니터링을 끕니다.
+- 레벨 미터는 모니터링이 꺼져 있어도 동작하므로 소리를 내보내기 전에 게인을 맞출 수 있습니다.
+- 튜너는 베이스 4·5현, 기타 6현, 크로매틱 프리셋과 기준음 A4 조절을 지원합니다.
+
+설치는 위의 [Install](#install)과 같습니다. 시스템 언어가 한국어이면 `make install` 후 한국어 화면으로 뜹니다(소스에서 바로 실행할 때는 `make`로 번역을 먼저 빌드).
+
+<img src="docs/screenshot-ko.webp" width="380" alt="한국어 화면">

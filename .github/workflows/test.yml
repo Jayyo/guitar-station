@@ -1,0 +1,10 @@
+name: test
+on: [push, pull_request]
+jobs:
+  pytest:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y python3-numpy python3-pytest gettext
+      - run: python3 -m pytest -q
+      - run: make
